@@ -4,15 +4,16 @@
 var IndexModel = require('../models/index'),
     ProfileModel = require('../models/profile'),
     AdminModel = require('../models/admin'),
+    DashBoardModel = require('../models/Dashboard'),
     auth = require('../lib/auth');
-
+	
 
 module.exports = function (router) {
 
     var indexmodel = new IndexModel();
     var profilemodel = new ProfileModel();
     var adminmodel = new AdminModel();
-
+    var dashboardmodel = new DashBoardModel();
 
     router.get('/', function (req, res) {
         res.render('index', indexmodel);
@@ -28,6 +29,11 @@ module.exports = function (router) {
         res.render('admin', adminmodel);
     });
 
+    router.get('/Dashboard',  function (req, res) {
+
+        res.render('Dashboard', dashboardmodel);
+
+    });	
     /**
      * Allow the users to log out
      */

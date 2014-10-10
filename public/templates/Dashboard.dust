@@ -8,6 +8,7 @@
 
 </head>
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <script type="text/javascript" src="js/dashboard.js"></script>
   <script type="text/javascript" src="js/jspdf.debug.js"></script>
   <script type="text/javascript" src="js/jquery.min.js"></script>
   <script type="text/javascript" src="js/pdfhelper.js"></script>
@@ -519,7 +520,7 @@ function onCompareButtonClick()
     var int_to = parseInt(datetoint);
     int_to = int_to /1000;
 
-if( 0== 0)
+if( 0== 1)
 {
    if (merchantID==null || merchantID=="")
     {
@@ -553,8 +554,10 @@ var reg = /(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d/;
    }
    else
    {
-     merchantID = "rwong-davis-network@paypal.com+2014-05-06+2014-05-06";
-       socket.emit('FileTableByEmailDateRange', merchantID);
+     merchantID = "rwong-davis-network@paypal.com+2012-01-01+2013-01-01";
+     console.log("1111111000");
+     FileTableByEmailDateRange(merchantID);
+    
    }
   
   }

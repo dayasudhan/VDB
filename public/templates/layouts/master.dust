@@ -3,32 +3,61 @@
 <head>
     <meta charset="utf-8"/>
     <title>{+title /}</title>
-    <link rel="stylesheet" href="css/app.css"/>
+    <link rel="stylesheet" href="css/dashboard_app.css"/>
+    <link rel="stylesheet" href="css/paypal_website.css"/>
 </head>
 <body class="nm-np">
 <header class="grey">
-    <div class="wrapper">
-        <h1>Kraken Central</h1>
+     
+    <div class="wrapper" >
+        <h1><center><font color="#3366CC">Bulk Api Dashboard</font></center></h1>
+        <h1><center><font color="#3366CC" size="4">Monitoring tool for Merchant Batch Framework</font></center></h1>
+        <div align="right">
+          <button id="btnSaveMe1" onclick='generatePDF()' class="button actionContinue" type="submit" name="_eventId_continue">Mail</button>
+          <button id="btnMailMe1" onclick='onMailMeButtonClick()' class="button actionContinue" type="submit" name="_eventId_continue">PDF</button>
+        
+      </div>
         <nav>
             <ul class="nm-np inline">
-                <li><a href="/">Home</a></li>
-                <li><a href="/profile">Profile</a></li>
-                <li><a href="/admin">Admin</a></li>
-                <li>
-                    {#user}
-                         <a href="/logout">Logout</a>
-                    {:else}
-                         <a href="/login">Login</a>
-                    {/user}
-                </li>
+                <li><a href="/Dashboard" class="textcolor"><b>Dashboard</b></a></li>
+                <li><a href="/File">File</a></li>  
+                <li><a href="/Item">Item</a></li>    
+                {?user}
+                    <li><a href="/logout">Logout ( {user.name} ) </a></li>
+                {:else}
+                    <li><a href="/login">Log In</a></li>
+                {/user}
+            </ul>
+
+        </nav>
+    </div>
+</header>
+</body>
+<!--<body class="nm-np">
+<header class="grey">
+    <div class="wrapper" style="color:aqua">
+        <h1><center>BulK Api Dashboard</center></h1>
+        <h3><center>Monitoring tool for Merchant Batch Framework</center></h3>
+        <nav>
+            <ul class="nm-np inline">
+                <li><a href="/Dashboard" id="homenav4">Dashboard</a></li>
+                <li><a href="/File" id="homenav5">File</a></li>
+                <li><a href="/Item" id="homenav6">Item</a></li>
+                {?user}
+                    <li><a href="/logout">Logout ( {user.name} ) </a></li>
+                {:else}
+                    <li><a href="/login">Log In</a></li>
+                {/user}
             </ul>
         </nav>
     </div>
 </header>
 
+
+
+<div id="tentacle"></div>
+</body>-->
 <div class="wrapper">
     {+body /}
 </div>
-<div id="tentacle"></div>
-</body>
 </html>

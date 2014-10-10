@@ -1,0 +1,70 @@
+{>"layouts/master" /}
+
+  <script src="/socket.io/socket.io.js"></script> 
+  <script type="text/javascript">
+
+  var socket = io.connect(document.location.protocol+'//'+document.location.host);
+
+  function myFunction()
+  {
+    document.getElementById("demo").innerHTML="Hello World";
+    socket.emit('message', "$query2" );
+  }
+  function myFunction1(message)
+  {
+    document.getElementById("demo").innerHTML=message;
+
+  }
+  function onSubmitButtonClick()
+  {
+
+    var query = document.getElementById("fid").value;
+    var qr = "select * FROM WMERCHANT_FILE where DROP_BOX_MERCHANT_ID = 1907963845095210132 and time_created between 1328900465 and 1377849141";
+    socket.emit('message', qr );
+  }
+socket.on('news', function(message){
+         console.log('received message:', message);
+         myFunction1(message);
+         });
+</script>
+{<body}
+
+      <div class="app">
+       <fieldset>
+        <form action="">
+        <input type="radio" name="File" id="Merchant_DropBox_ID" >Merchant DropBox ID<br>
+      </form>
+
+       
+        From: <input type="date" id="dateFrom" name="date1">
+        To: <input type="date" id="dateTo" name="date2"><br>
+         <input type="text" id="fid" name="file"><br>
+        <input type="button" id="btnFileStatus" value="Submit" onclick='onSubmitButtonClick()' />
+        <input type="button" id="btnBack" value="Back" onclick='backButtonClicked()' /><br>
+        
+    </fieldset>
+        
+        
+  </div>
+
+
+      <tr valign="top">
+        <td style="width: 50%;", >
+         
+          <h2 style="color:black;" align="center" id ="hd"></h2>
+          <div id="table_div"></div>
+          <div id="table_div2"></div>
+        </td>
+      </tr>
+      <tr>
+        <td colSpan=2>
+          <div id="chart_div" style="align: center; width: 600px; height: 300px;" id ="chartid"></div>
+        </td>
+      </tr>
+    </table>
+    <p>Click the button to trigger a function.</p>
+
+<button onclick="myFunction()">Click me</button>
+<button onclick="myFunction1()">tttt me</button>
+<p id="demo"></p>
+{/body}
