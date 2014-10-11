@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" class="nm-np">
+<head>
+    <meta charset="utf-8"/>
+    <title>{+title /}</title>
+    <link rel="stylesheet" href="css/dashboard_app.css"/>
+    <link rel="stylesheet" href="css/paypal_website.css"/>
+
+</head>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript" src="js/Item.js"></script>
+<script src="/socket.io/socket.io.js"></script> 
+<script type="text/javascript" src="js/pdfhelper.js"></script>
+
+  <script type="text/javascript">
+google.load('visualization', '1', {'packages': ['table', 'map', 'corechart']});
+      google.setOnLoadCallback(initialize);
+
+var dataMessage ;
+      function initialize() {
+drawFileStatusTable(dataMessage);
+      }
+
+  var socket = io.connect(document.location.protocol+'//'+document.location.host);
+
+function drawFileStatusTable(message1) {
+  var message = message1.batchItemList;
+          var data = new google.visualization.DataTable();
+          data.addColumn('number', 'ID ');
+          data.addColumn('string', 'STATUS');
+          data.addColumn('string', 'PIMP_RC_ERROR_CODE');
+           data.addColumn('number', 'REASON_CODE');
+          data.addColumn('string', 'TIME_CREATED');
+          data.addColumn('string', 'TIME_COMPLETED');
+         
+
+          data.addRows(message1.length);
+         if(message1.length == 1)
+         {
+           data.setCell(0, 0, message.ID );
+           data.setCell(0, 1, message.STATUS);
+           data.setCell(0, 2, message.PIMP_RC);
+            data.setCell(0, 3, message.REASON_CODE);
+          var date1 = new Date(message.TIME_CREATED * 1000);
+          if(message.TIME_CREATED != 0)
+          {
+              data.setCell(0, 4, getTimeDateString(date1));
+          }
+          var date2 = new Date(message.TIME_COMPLETED * 1000);
+          if(message.TIME_COMPLETED != 0)
+          {
+              data.setCell(0, 5,getTimeDateString(date2));
+          }
+         
+         }
+         else
+         {
+           for(var i=0;i<message.length;i++)
+           {
+            data.setCell(i, 0, message[i].ID );
+            data.setCell(i, 1, message[i].STATUS);
+            data.setCell(i, 2, message[i].PIMP_RC);
+             data.setCell(i, 3, message[i].REASON_CODE);
+            var date1 = new Date(message[i].TIME_CREATED * 1000);
+            if(message[i].TIME_CREATED != 0)
+            {
+                data.setCell(i, 4, getTimeDateString(date1));
+            }
+              var date2 = new Date(message[i].TIME_COMPLETED * 1000);
+            if(message[i].TIME_CREATED != 0)
+            { 
+                data.setCell(i, 5,getTimeDateString(date2));
+            }
+            
+           }
+       }
+          var table = new google.visualization.Table(document.getElementById('table_div'));
+         
+           var options = {};
+               options['showRowNumber'] = true;
+               options['page'] = 'enable';
+               options['allowHtml'] = true;
+               options['pageSize'] = 5;
+               options['pagingButtonsConfiguration'] = 'auto';
+         table.draw(data, options);
+           var  hdg=document.getElementById("hd");
+           var filename = document.getElementById("fid").value;
+         hdg.innerHTML =  "<font color=\"#3366CC\" size=\"4\">List of items for BatchID "+ filename + "</font>";
+        
+          google.visualization.events.addListener(table, 'select', function() {
+            var row = table.getSelection()[0].row;
+     
+          });
+}
+      function drawBatchChart(message1) {
+        var message = message1.batchItemList;
+        var nbl = 0 , nbr = 0, nbp = 0;
+        if(message1.length == 1)
+         {
+            nbl = nbl + message.NUM_TOTAL;
+            nbr = nbr + message.NUM_SUCCESS;
+            nbp = nbp + message.NUM_FAILED;
+         }
+         else
+         {
+          for(var i=0;i<message.length;i++)
+          {
+            nbl = nbl + message[i].NUM_TOTAL;
+            nbr = nbr + message[i].NUM_SUCCESS;
+            nbp = nbp + message[i].NUM_FAILED;
+          } 
+        }
+        var data = google.visualization.arrayToDataTable([
+          ['BATCH', 'NUMBER'],
+           ['NUM_SUCCESS',  nbr],
+          ['NUM_FAILED',  nbp],
+                   
+        ]);
+
+        var options = {
+          title: 'Batch Status',
+          hAxis: {title: 'BATCH STATUS', titleTextStyle: {color: 'red'}}
+         
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+        chart.draw(data, options);
+      }
+socket.on('BatchItemTable', function(message){
+         console.log('received message:', message);
+         dataMessage = message;
+         document.getElementById("loadingid").style.visibility = "hidden";
+         drawFileStatusTable(message);
+         });
+</script>
+
+<body class="nm-np" onload="processRequestParamter()">
+<header class="grey">
+    <br/>
+    <div class="wrapper" >
+       
+        <img src="img/logo_paypal_106x29.png" />
+        <h1><center><font color="#3366CC" size="5">Bulk Api Dashboard</font></center></h1>
+        <h1><center><font color="#3366CC" size="2">Monitoring tool for Merchant Batch Framework</font></center></h1>
+        <div align="right">
+          <button id="btnSaveMe1" onclick='onMailMeButtonClick()' class="button actionContinue" type="submit" name="_eventId_continue">Mail</button>
+          <button id="btnMailMe1" onclick='generatePDF()' class="button actionContinue" type="submit" name="_eventId_continue">PDF</button>
+        
+      </div>
+        <nav>
+            <ul class="nm-np inline">
+                <li><a href="/Dashboard">Dashboard</a></li>
+                <li><a href="/File">File</a></li>  
+                <li><a href="/Item" class="textcolor"><b>Item</b></a></li>    
+                {?user}
+                    <li><a href="/logout">Logout ( {user.name} ) </a></li>
+                {:else}
+                    <li><a href="/login">Log In</a></li>
+                {/user}
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="wrapper">
+    <br/>
+   <div class="app" width="40%">
+        <table >
+          <tr>
+            <td><font color="#3366CC">Batch ID:</font></td>
+            <td>&nbsp;&nbsp;<input type="text" name="Batch ID" id="fid" ></td>
+          </tr>
+          <tr>
+            <td>
+            <button id="btnFileStatus" onclick='onSubmitButtonClick()' class="button actionContinue" type="submit" name="_eventId_continue">Submit</button>
+            <td><td></td>
+          </tr>  
+        </table>
+     </div>
+     <div id="loadingid" style="visibility: hidden" align="center"><img src="img/loading_paypal.gif"></div>
+
+      <tr valign="top">
+        <td style="width: 50%;", >
+            
+          <h2 style="color:aqua;" align="center" id ="hd"></h2>
+          <div id="table_div"></div>
+          <div id="table_div2"></div>
+          <div id="piechart_3d" style="width: 700px; height: 200px;"></div>
+          <div id="piechart_3d2" style="width: 700px; height: 200px;"></div>
+      
+        </td>
+      </tr>
+      <tr>
+        <td colSpan=2>
+          <div id="chart_div" style="align: center; width: 600px; height: 300px;" id ="chartid"></div>
+        </td>
+      </tr>
+    </table>
+
+</div>
+
+<div id="tentacle"></div>
+</body>
+</html>
