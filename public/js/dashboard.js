@@ -1,4 +1,5 @@
 var rootURL = "https://localhost:8443/v1/Board";
+var vbdurl = "http://localhost:8000";
 var dataMessage ;
 function initialize() 
 {
@@ -64,107 +65,104 @@ function onSubmitButtonClick()
     var int_to = parseInt(datetoint);
     int_to = int_to /1000;
 
-    if( 0== 0)
-{
-   if (merchantID==null || merchantID=="")
-    {
-      alert("Merchant Email must be filled out");
-    }
-   
-var reg = /(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d/;
-        
-    if(datefrom == "" )    {
+	if( 0== 0)
+	{
+		if (merchantID==null || merchantID=="")
+		{
+		  alert("Merchant Email must be filled out");
+		}
+		var reg = /(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d/;
+		if(datefrom == "" )    {
+		  alert("Enter  From Date");
+		  return false;
+		}
+		else if(dateto == "" )    {
 
-      alert("Enter  From Date");
-      return false;
-    }
-    else if(dateto == "" )    {
-
-      alert("Enter To Date");
-      return false;
-    }
-    else if(datetoint < intdatefrom){
-        alert("Enter a valid Date renge ");
-         return false;
-     } 
-    else {
-      merchantID += "+";
-       merchantID += datefrom;
-       merchantID += "+";
-       merchantID += dateto;
-       
-       FileTableByEmailDateRange(merchantID);
-         return true
-     }
-   }
-   else
-   {
-     merchantID = "rwong-davis-network@paypal.com+2012-01-01+2013-01-01";
-     console.log("1111111000");
-     FileTableByEmailDateRange(merchantID);
-    
-   }
+		  alert("Enter To Date");
+		  return false;
+		}
+		else if(datetoint < intdatefrom){
+			alert("Enter a valid Date renge ");
+			 return false;
+		 } 
+		else {
+		  merchantID += "+";
+		   merchantID += datefrom;
+		   merchantID += "+";
+		   merchantID += dateto;
+		   
+		   FileTableByEmailDateRange(merchantID);
+			 return true
+		 }
+	   }
+	   else
+	   {
+		 merchantID = "rwong-davis-network@paypal.com+2012-01-01+2013-01-01";
+		 console.log("1111111000");
+		 FileTableByEmailDateRange(merchantID);
+		
+	   }
   
   }
 function drawChart2(message) 
 {
-var fileReasonCode = {
-"FN001":{"name":"FILE_NAME_MISSING_MERCHANT_ID","no":0},
-"FN002":{"name":"FILE_NAME_INCORRECT_TXN_TYPE","no":0},                       
-"FN003":{"name":"FILE_NAME_MISSING_TXN_TYPE","no":0},                           
-"FN004":{"name":"FILE_NAME_MISSING_REQUEST","no":0},                            
-"FN005":{"name":"FILE_NAME_MISSING_YEAR","no":0},                             
-"FN006":{"name":"FILE_NAME_MISSING_MONTH","no":0},                              
-"FN007":{"name":"FILE_NAME_MISSING_DAY","no":0},                              
-"FN008":{"name":"FILE_NAME_INCORRECT_DATE","no":0},                           
-"FN009":{"name":"FILE_NAME_MISSING_SEQUENCE_NUMBER","no":0},              
-"FN010":{"name":"FILE_NAME_INCORRECT_EXTENSION","no":0},                    
-"FV001":{"name":"FV_INVALID_FILE_VERSION","no":0},                          
-"FH001":{"name":"FH_FILE_HEADER_MISSING","no":0}, 
-"FH002":{"name":"FH_INVALID_FILE_TYPE","no":0},                                 
-"FH003":{"name":"FH_INVALID_FILE_VERSION","no":0},                            
-"FH004":{"name":"FH_INVALID_FILE_DATE","no":0},                                 
-"FH005":{"name":"FH_FILE_DATE_OUT_OF_RANGE","no":0},                            
-"FH006":{"name":"FH_INVALID_SEQUENCE_NUMBER","no":0},                         
-"FH007":{"name":"FH_DUPLICATE_SEQUENCE_NUMBER_FOR_DAY","no":0},                 
-"FH008":{"name":"FH_INVALID_BATCH_COUNT","no":0},                               
-"FH009":{"name":"FH_INVALID_DROP_BOX_MERCHANT_EMAIL_ADDRESS","no":0},           
-"FH010":{"name":"FH_DUPLICATE_FILE_HEADER","no":0},                             
-"FF001":{"name":"FT_FILE_TRAILER_MISSING","no":0},                              
-"FF002":{"name":"FT_INVALID_BATCH_COUNT","no":0},                               
-"FF003":{"name":"FT_NUMBER_OF_BATCHES_PER_FILE_EXCEEDED","no":0},
-"FF004":{"name":"FT_EMPTY_BATCHES_PRESENT_IN_FILE","no":0},                   
-"FF005":{"name":"FT_DUPLICATE_FILE_TRAILER","no":0},                            
-"CS001":{"name":"CS_MISSING_CHECKSUM_RECORD","no":0},                           
-"CS002":{"name":"CS_CHECKSUM_INVALID_FOR_FILE","no":0},                         
-"CS003":{"name":"CS_CHECKSUM_DUPLICATE_FILE","no":0},                           
-"FS000":{"name":"SUCCESSFUL_FILE_INFO","no":0},                                 
-"FE001":{"name":"EMPTY_FILE","no":0},                                           
-"FI001":{"name":"INCOMPLETE_FILE","no":0},                                      
-"FX001":{"name":"NUMBER_OF_TRANSACTIONS_EXCEEDED_FOR_FILE","no":0},             
-"FX002":{"name":"INTERNAL_ERROR_FILE_NOT_PROCESSED","no":0},                    
-"FD001":{"name":"DUPLICATE_FILE","no":0},                                     
-"FP001":{"name":"INVALID_PAYER_ID","no":0},                                   
-"FI002":{"name":"INCORRECT_ENTRY_OUT_OF_PLACE","no":0},                         
-"FI003":{"name":"INCORRECT_LINE","no":0},                                       
-"FI004":{"name":"MISSING_BATCH_HEADER","no":0},                                 
-"FI005":{"name":"INVALID_BATCH_ERR_THRESHOLD","no":0},                          
-"FI006":{"name":"MISSING_FILE_NOT_FOUND","no":0},                               
-"FI007":{"name":"VALIDATION_FAILED","no":0},                                  
-"FI008":{"name":"PUBLISH_OF_ITEMS_FAILED","no":0}                             
-};
+	var fileReasonCode = {
+	"FN001":{"name":"FILE_NAME_MISSING_MERCHANT_ID","no":0},
+	"FN002":{"name":"FILE_NAME_INCORRECT_TXN_TYPE","no":0},                       
+	"FN003":{"name":"FILE_NAME_MISSING_TXN_TYPE","no":0},                           
+	"FN004":{"name":"FILE_NAME_MISSING_REQUEST","no":0},                            
+	"FN005":{"name":"FILE_NAME_MISSING_YEAR","no":0},                             
+	"FN006":{"name":"FILE_NAME_MISSING_MONTH","no":0},                              
+	"FN007":{"name":"FILE_NAME_MISSING_DAY","no":0},                              
+	"FN008":{"name":"FILE_NAME_INCORRECT_DATE","no":0},                           
+	"FN009":{"name":"FILE_NAME_MISSING_SEQUENCE_NUMBER","no":0},              
+	"FN010":{"name":"FILE_NAME_INCORRECT_EXTENSION","no":0},                    
+	"FV001":{"name":"FV_INVALID_FILE_VERSION","no":0},                          
+	"FH001":{"name":"FH_FILE_HEADER_MISSING","no":0}, 
+	"FH002":{"name":"FH_INVALID_FILE_TYPE","no":0},                                 
+	"FH003":{"name":"FH_INVALID_FILE_VERSION","no":0},                            
+	"FH004":{"name":"FH_INVALID_FILE_DATE","no":0},                                 
+	"FH005":{"name":"FH_FILE_DATE_OUT_OF_RANGE","no":0},                            
+	"FH006":{"name":"FH_INVALID_SEQUENCE_NUMBER","no":0},                         
+	"FH007":{"name":"FH_DUPLICATE_SEQUENCE_NUMBER_FOR_DAY","no":0},                 
+	"FH008":{"name":"FH_INVALID_BATCH_COUNT","no":0},                               
+	"FH009":{"name":"FH_INVALID_DROP_BOX_MERCHANT_EMAIL_ADDRESS","no":0},           
+	"FH010":{"name":"FH_DUPLICATE_FILE_HEADER","no":0},                             
+	"FF001":{"name":"FT_FILE_TRAILER_MISSING","no":0},                              
+	"FF002":{"name":"FT_INVALID_BATCH_COUNT","no":0},                               
+	"FF003":{"name":"FT_NUMBER_OF_BATCHES_PER_FILE_EXCEEDED","no":0},
+	"FF004":{"name":"FT_EMPTY_BATCHES_PRESENT_IN_FILE","no":0},                   
+	"FF005":{"name":"FT_DUPLICATE_FILE_TRAILER","no":0},                            
+	"CS001":{"name":"CS_MISSING_CHECKSUM_RECORD","no":0},                           
+	"CS002":{"name":"CS_CHECKSUM_INVALID_FOR_FILE","no":0},                         
+	"CS003":{"name":"CS_CHECKSUM_DUPLICATE_FILE","no":0},                           
+	"FS000":{"name":"SUCCESSFUL_FILE_INFO","no":0},                                 
+	"FE001":{"name":"EMPTY_FILE","no":0},                                           
+	"FI001":{"name":"INCOMPLETE_FILE","no":0},                                      
+	"FX001":{"name":"NUMBER_OF_TRANSACTIONS_EXCEEDED_FOR_FILE","no":0},             
+	"FX002":{"name":"INTERNAL_ERROR_FILE_NOT_PROCESSED","no":0},                    
+	"FD001":{"name":"DUPLICATE_FILE","no":0},                                     
+	"FP001":{"name":"INVALID_PAYER_ID","no":0},                                   
+	"FI002":{"name":"INCORRECT_ENTRY_OUT_OF_PLACE","no":0},                         
+	"FI003":{"name":"INCORRECT_LINE","no":0},                                       
+	"FI004":{"name":"MISSING_BATCH_HEADER","no":0},                                 
+	"FI005":{"name":"INVALID_BATCH_ERR_THRESHOLD","no":0},                          
+	"FI006":{"name":"MISSING_FILE_NOT_FOUND","no":0},                               
+	"FI007":{"name":"VALIDATION_FAILED","no":0},                                  
+	"FI008":{"name":"PUBLISH_OF_ITEMS_FAILED","no":0}                             
+	};
 
-for(var i=0;i<message.length;i++)
-{
-    if(message[i].FILE_RETURN_CODE == "FS000")
-    {
-       fileReasonCode.FS000.no++;
-    }
-    else if(message[i].FILE_RETURN_CODE == "FH009")
-    {
-       fileReasonCode.FH009.no++;
-    }
-}
+	for(var i=0;i<message.length;i++)
+	{
+	    if(message[i].FILE_RETURN_CODE == "FS000")
+	    {
+	       fileReasonCode.FS000.no++;
+	    }
+	    else if(message[i].FILE_RETURN_CODE == "FH009")
+	    {
+	       fileReasonCode.FH009.no++;
+	    }
+	}
 
         var data = google.visualization.arrayToDataTable([
                   ['Task', 'Hours per Day'],
@@ -337,16 +335,13 @@ function addme(index)
               now = date;
               if(message.fileList.TIME_RECEIPT_GENERATED != 0)
               {
-                
-
-
                 data.setCell(i, j++, getTimeDateString(now));
               }
               var date1 = new Date(message.fileList.TIME_RESULT_GENERATED * 1000);
               now = date1;  
               if(message.fileList.TIME_RESULT_GENERATED != 0)
               {
-                
+              
                 data.setCell(i, j++,getTimeDateString(now));
               }
               
@@ -373,17 +368,15 @@ function addme(index)
               if(message.fileList[i].TIME_RECEIPT_GENERATED != 0)
               {
                 var dd =  ((now.getMonth() + 1) + '/' +
-            (now.getDate()) + '/' +
-             now.getFullYear() + " " +
-             now.getHours() + ':' +
-             ((now.getMinutes() < 10)
-                 ? ("0" + now.getMinutes())
-                 : (now.getMinutes())) + ':' +
-             ((now.getSeconds() < 10)
-                 ? ("0" + now.getSeconds())
-                 : (now.getSeconds())));
-
-
+				(now.getDate()) + '/' +
+				 now.getFullYear() + " " +
+				 now.getHours() + ':' +
+				 ((now.getMinutes() < 10)
+					 ? ("0" + now.getMinutes())
+					 : (now.getMinutes())) + ':' +
+				 ((now.getSeconds() < 10)
+					 ? ("0" + now.getSeconds())
+					 : (now.getSeconds())));
                 data.setCell(i, j++, dd);
               }
               var date1 = new Date(message.fileList[i].TIME_RESULT_GENERATED * 1000);
@@ -391,39 +384,35 @@ function addme(index)
               if(message.fileList[i].TIME_RESULT_GENERATED != 0)
               {
                 var dd=  ((now.getMonth() + 1) + '/' +
-            (now.getDate()) + '/' +
-             now.getFullYear() + " " +
-             now.getHours() + ':' +
-             ((now.getMinutes() < 10)
-                 ? ("0" + now.getMinutes())
-                 : (now.getMinutes())) + ':' +
-             ((now.getSeconds() < 10)
-                 ? ("0" + now.getSeconds())
-                 : (now.getSeconds())));
-
-
-                
-                data.setCell(i, j++,dd);
-              }
-              createFormElement(fileName,message.fileList[i].STATUS);
+				(now.getDate()) + '/' +
+				 now.getFullYear() + " " +
+				 now.getHours() + ':' +
+				 ((now.getMinutes() < 10)
+					 ? ("0" + now.getMinutes())
+					 : (now.getMinutes())) + ':' +
+				 ((now.getSeconds() < 10)
+					 ? ("0" + now.getSeconds())
+					 : (now.getSeconds())));
+					data.setCell(i, j++,dd);
+				  }
+             // createFormElement(fileName,message.fileList[i].STATUS);
            }
          }
          var  hdg=document.getElementById("hd");
          hdg.innerHTML = "<font color=\"#3366CC\" size=\"4\">List of Files</font>";
          var table = new google.visualization.Table(document.getElementById('table_div'));
          var options = {};
-               options['showRowNumber'] = true;
-               options['page'] = 'enable';
-               options['allowHtml'] = true;
-               options['pageSize'] = 5;
-               options['pagingButtonsConfiguration'] = 'auto';
+			options['showRowNumber'] = true;
+			options['page'] = 'enable';
+			options['allowHtml'] = true;
+			options['pageSize'] = 5;
+			options['pagingButtonsConfiguration'] = 'auto';
          table.draw(data, options);
          drawChart(message.fileList);
          if(message.reasonCodeListLength > 100)
          {
            drawChart(message);
          }
-
           google.visualization.events.addListener(table, 'select', function() {
              var filename ;
             if(message.length == 1)
@@ -441,16 +430,11 @@ function addme(index)
       }
 
      
-      function drawChart3(message) {
-      
-          var data = new google.visualization.DataTable();
-
-          data.addColumn('string', 'FILENAME');
-          
-          if(message.length == 1)
-          {
-            if(message.reasonCodeListLength == 1)
-            {
+function drawChart3(message) {
+    var data = new google.visualization.DataTable();
+	data.addColumn('string', 'FILENAME');
+    if(message.length == 1)    {
+        if(message.reasonCodeListLength == 1)            {
               data.addColumn('number', message.fileList.PIMP_RC_List.entry.key);  
             }
             else
@@ -540,17 +524,17 @@ function addme(index)
          });
 function is_valid_integer(textField){
 
-    var reg = /^[0-9]+$/;
-    if(!reg.test(textField.value)){
+	    var reg = /^[0-9]+$/;
+	    if(!reg.test(textField.value)){
 
-    alert("Please enter integers only");
+	    alert("Please enter integers only");
 
-    textField.value="";
+	    textField.value="";
 
-    textField.focus();
+	    textField.focus();
 
-    return false; 
+	    return false; 
 
-}
-return true
+	}
+	return true
 }
