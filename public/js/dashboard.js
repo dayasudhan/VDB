@@ -65,7 +65,7 @@ function onSubmitButtonClick()
     var int_to = parseInt(datetoint);
     int_to = int_to /1000;
 
-	if( 0== 0)
+	if( 1== 0)
 	{
 		if (merchantID==null || merchantID=="")
 		{

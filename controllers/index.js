@@ -5,10 +5,11 @@ var IndexModel = require('../models/index'),
     ProfileModel = require('../models/profile'),
     AdminModel = require('../models/admin'),
     DashBoardModel = require('../models/Dashboard'),
-    BatchModel = require('../models/Batch'),
+   // BatchModel = require('../models/Batch'),
     BatchItemModel = require('../models/BatchItem'),
     FileModel = require('../models/File'),
     ItemModel = require('../models/Item'),
+    MerchantModel = require('../models/Merchant'),
     auth = require('../lib/auth');
 	
 
@@ -18,10 +19,11 @@ module.exports = function (router) {
     var profilemodel = new ProfileModel();
     var adminmodel = new AdminModel();
     var dashboardmodel = new DashBoardModel();
-    var batchmodel = new BatchModel();
+   // var batchmodel = new BatchModel();
     var BatchItemmodel = new BatchItemModel();	
     var filemodel = new FileModel();
     var itemModel = new ItemModel();	
+    var merchantModel = new MerchantModel();    
     
     router.get('/', function (req, res) {
         res.render('index', indexmodel);
@@ -40,9 +42,9 @@ module.exports = function (router) {
     router.get('/Dashboard',  function (req, res) {
         res.render('Dashboard', dashboardmodel);
     });
-    router.get('/Batch',  function (req, res) {
-        res.render('Batch', batchmodel);
-    });
+    // router.get('/Batch',  function (req, res) {
+    //     res.render('Batch', batchmodel);
+    // });
     router.get('/BatchItem',  function (req, res) {
         res.render('BatchItem', BatchItemmodel);
     });
@@ -52,6 +54,10 @@ module.exports = function (router) {
     router.get('/Item',  function (req, res) {
         res.render('Item', itemModel);
     });
+    router.get('/Merchant',  function (req, res) {
+        res.render('Merchant', merchantModel);
+    });
+    
     
     
     	

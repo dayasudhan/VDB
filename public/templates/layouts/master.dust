@@ -21,7 +21,8 @@
             <ul class="nm-np inline">
                 <li><a href="/Dashboard" class="textcolor"><b>Dashboard</b></a></li>
                 <li><a href="/File">File</a></li>  
-                <li><a href="/Item">Item</a></li>    
+                <li><a href="/Item">Item</a></li>  
+		<li><a href="/Merchant">Merchant</a></li>    
                 {?user}
                     <li><a href="/logout">Logout ( {user.name} ) </a></li>
                 {:else}
@@ -43,6 +44,7 @@
                 <li><a href="/Dashboard" id="homenav4">Dashboard</a></li>
                 <li><a href="/File" id="homenav5">File</a></li>
                 <li><a href="/Item" id="homenav6">Item</a></li>
+		<li><a href="/Merchant" id="homenav7">Merchant</a></li>
                 {?user}
                     <li><a href="/logout">Logout ( {user.name} ) </a></li>
                 {:else}

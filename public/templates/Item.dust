@@ -44,7 +44,8 @@ drawFileStatusTable(dataMessage);
             <ul class="nm-np inline">
                 <li><a href="/Dashboard">Dashboard</a></li>
                 <li><a href="/File">File</a></li>  
-                <li><a href="/Item" class="textcolor"><b>Item</b></a></li>    
+                <li><a href="/Item" class="textcolor"><b>Item</b></a></li>   
+                 <li><a href="/Merchant">Merchant</a></li>  
                 {?user}
                     <li><a href="/logout">Logout ( {user.name} ) </a></li>
                 {:else}

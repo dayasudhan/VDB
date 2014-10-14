@@ -5,10 +5,9 @@
     <title>{+title /}</title>
     <link rel="stylesheet" href="css/dashboard_app.css"/>
     <link rel="stylesheet" href="css/paypal_website.css"/>
-
 </head>
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-  <script type="text/javascript" src="js/dashboard.js"></script>
+  <script type="text/javascript" src="js/merchant.js"></script>
   <script type="text/javascript" src="js/jspdf.debug.js"></script>
   <script type="text/javascript" src="js/jquery.min.js"></script>
   <script type="text/javascript" src="js/pdfhelper.js"></script>
@@ -18,13 +17,6 @@
 
 google.load('visualization', '1', {'packages': ['table', 'map', 'corechart']});
       google.setOnLoadCallback(initialize);
-
-
-
-
-
-
-
 
 </script>
 <body class="nm-np">
@@ -44,8 +36,8 @@ google.load('visualization', '1', {'packages': ['table', 'map', 'corechart']});
 
                 <li><a href="/Dashboard" class="textcolor"><b>Dashboard</b></a></li>
                 <li><a href="/File">File</a></li>  
-                <li><a href="/Item">Item</a></li>   
-                 <li><a href="/Merchant">Merchant</a></li>   
+                <li><a href="/Item">Item</a></li>    
+                <li><a href="/Merchant">Merchant</a></li>  
                 {?user}
                     <li><a href="/logout">Logout ( {user.name} ) </a></li>
                 {:else}
@@ -66,23 +58,15 @@ google.load('visualization', '1', {'packages': ['table', 'map', 'corechart']});
         <tr><td></td><td>
           <button id="btnFileStatus" onclick='onSubmitButtonClick()' class="button actionContinue" type="submit" name="_eventId_continue">Submit</button>
           </td></tr>
-       </table> 
-        
-        
-   
+       </table>     
     </div>
       <tr valign="top">
         <td style="width: 100%;", >
           <div class="test" >
           <h2 align="center" id ="hd"></h2>
-          <div id="piechart_3d" style=""></div>
-          <div id="piechart_3d2" style=""></div>
+          <div id="piechart_3d" style="width: 800px; height: 300px;"></div>
           <div id="loadingid" style="visibility: hidden" align="center"><img src="img/loading_paypal.gif"></div>
-          <div id="cmpr" style="visibility: hidden" >
-            <font style="color:#3366CC" id="CompareLabel" >You can now monitor error trends across files, please select files and click </font>
-            <button type="button" id="Compare"  onclick='onCompareButtonClick()'>Compare</button>
-          </div>
-          <br>
+        <br>
           <div id="chart_div" style="" id ="chartid" style="width: 400px; height: 300px;" ></div>
           <div id="table_div"></div>
           <div id="tentacle" style="visibility: hidden">
@@ -93,17 +77,9 @@ google.load('visualization', '1', {'packages': ['table', 'map', 'corechart']});
       </tr>
       <tr>
         <td colSpan=2>
-          
-
         </td>
       </tr>
     </table>
-
 </div>
-
-
 </body>
 </html>
-
- 
-
