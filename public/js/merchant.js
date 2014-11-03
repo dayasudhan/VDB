@@ -17,14 +17,15 @@ function EmailListDateRange(merchantID)
 
 	$.get( url2, function( data ) {
 		  console.log('received message111:', data);
-		  alert( "Load was performed." );
+		  alert( "Load was performed." );  
 		  renderList(data);
 		});
+		
+	var data1 = '{"TotalErrorList":{"reasonCodeSet":{"entry":[{"key":0,"value":{"name":"SUCCESS","total":732}},{"key":3234,"value":{"name":"PIMP_RC_REFUSED_NEED_CC_OR_BA_TO_COMPLETE_PAYMENT","total":3}},{"key":520002,"value":{"name":"UNKNOWN_PIMP_RC_ERROR","total":407}},{"key":3037,"value":{"name":"PIMP_RC_REFUSED_ALIAS_CANNOT_REMOVE_PRIMARY","total":1}},{"key":4002,"value":{"name":"PIMP_RC_INTERNAL_ERROR","total":6}},{"key":14805,"value":{"name":"PIMP_RC_BULKAPI_ITEM_FORCE_FAILED","total":3}},{"key":4819,"value":{"name":"PIMP_RC_REFUSED_NEED_DIFF_CREDIT_CARD_TO_COMPLETE_PAYMENT","total":8}},{"key":7120,"value":{"name":"PIMP_RC_MP_REFUSED_REF_ID_DECRYPTION_FAILED","total":5}},{"key":3169,"value":{"name":"PIMP_RC_REFUSED_ALL_FUNDING_SOURCES_UNUSABLE","total":4}},{"key":3046,"value":{"name":"PIMP_RC_REFUSED_CC_REFUSED","total":3}}]}}}';	
+	//renderList(data1);
 }
 function renderList(data){
-    console.log(data.FileResponseList);
     console.log('received message:', data);
-
     message123 = data.TotalErrorList;
     document.getElementById("loadingid").style.visibility = "hidden";
     drawChart(data.TotalErrorList);
@@ -139,18 +140,18 @@ function drawChart(response) {
   console.log("Inside drawChart");
   console.log(response);
   var data1 = [['Error Name', 'No of Errors']];
+  var data2 = [['Error Name','Error Code', 'No of Errors']];
   for(var i = 0 ; i < response.reasonCodeSet.entry.length;i++)
   {
     var name = response.reasonCodeSet.entry[i].value.name + ' ('+ response.reasonCodeSet.entry[i].key.toString()+')';
-    name +=  " : " + response.reasonCodeSet.entry[i].value.total.toString();
-    data1.push([name, 
-      response.reasonCodeSet.entry[i].value.total]);
+ //   var name1 = name;
+	name +=  " : " + response.reasonCodeSet.entry[i].value.total.toString();
+    data1.push([name,response.reasonCodeSet.entry[i].value.total]);
+	data2.push([response.reasonCodeSet.entry[i].value.name,response.reasonCodeSet.entry[i].key,response.reasonCodeSet.entry[i].value.total]);  
   }
    
-   var data = google.visualization.arrayToDataTable(
-                 data1
-                
-        );
+   var data = google.visualization.arrayToDataTable(data1);
+   var tabledata = google.visualization.arrayToDataTable(data2);
         var options = {
           title: "Error Status",
           titleTextStyle: {color: '#3366CC'},
@@ -160,6 +161,10 @@ function drawChart(response) {
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
         chart.draw(data, options);
+		
+		var table = new google.visualization.Table(document.getElementById('table_div'));
+
+        table.draw(tabledata, {showRowNumber: true});
       }
 
 
